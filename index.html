@@ -21,15 +21,21 @@
 
         .column {
             float: left;
-            width: 33.33%;
+            width: 20%; /* 5 columns for larger screens */
             padding: 10px;
             box-sizing: border-box;
             text-align: center;
         }
 
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: 991px) {
             .column {
-                width: 50%;
+                width: 50%; /* 2 columns for medium screens */
+            }
+        }
+
+        @media screen and (max-width: 575px) {
+            .column {
+                width: 100%; /* 1 column for small screens */
             }
         }
 
