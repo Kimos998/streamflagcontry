@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Channels</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        @media screen and (max-width: 767px) {
+            .column {
+                width: 50%;
+            }
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Agregar estilos CSS para mejorar el diseño */
+        #countries-list .column a:hover {
+            color: darkgray; /* Cambiar color del texto al pasar el mouse */
+            cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="clearfix">
+            <h1>TV Channels</h1>
+        </div>
+        <div id="countries-list" class="clearfix"></div>
+    </div>
+
+    <script>
+        // Function to fetch country data and display flag
+        function fetchCountryData(countryName) {
+            fetch(`https://restcountries.com/v2/name/${countryName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) { // Check if country exists
+                        const country = data[0];
+                        const countriesList = document.getElementById('countries-list');
+                        const countryDiv = document.createElement('div');
+                        countryDiv.className = 'column';
+
+                        const countryUrl = `view4.html?country=${encodeURIComponent(countryName)}`;
+                        countryDiv.innerHTML = `
+                            <a href="${countryUrl}">
+                                <img src="${country.flags.png}" alt="${country.name}" style="width:100%">
+                                <p>${country.name} TV</p>
+                            </a>
+                        `;
+                        countriesList.appendChild(countryDiv);
+                    } else {
+                        console.warn(`Country "${countryName}" not found.`);
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        fetch('https://sheets.googleapis.com/v4/spreadsheets/1Nc1LNBUnUyJNV9dnJ10QFh8tMsjA_nQxRS9mKw4xFHI/values/Sheet1!A1:I100?key=AIzaSyB5WTjIR5OZt108xl9uQApzeoNRWuMyYRE')
+            .then(response => response.json())
+            .then(data => {
+                const uniqueCountries = new Set(data.values.slice(1).map(item => item[1])); // Ignoring the first row (titles)
+                uniqueCountries.forEach(countryName => {
+                    fetchCountryData(countryName);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+
+</html>
