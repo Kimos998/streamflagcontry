@@ -51,8 +51,7 @@ margin-left: 6%;
             padding: 0; /* Remove default padding */
             margin: 0; /* Remove default margin */
             border: 1px solid #ddd; /* Add border for aesthetics */
-            text-decoration: none; /* Remove all text decoration */
-            text-decoration-underline: none; /* Specifically remove underline */
+            
 
         }
         #channels-list li {
@@ -61,14 +60,17 @@ margin-left: 6%;
             color: #808080; /* Gray text color */
             background-color: #ffffff; /* White background color */
             transition: color 0.3s, background-color 0.3s; /* Add transition effect */
-            text-decoration: none; /* Remove all text decoration */
-            text-decoration-underline: none; /* Specifically remove underline */   
+             
 
         }
         #channels-list li:hover {
             color: #000000; /* Black text color on hover */
             background-color: #f0f0f0; /* Gray background color on hover */
         }
+
+#channels-list li a {
+  text-decoration: none; /* Remove underline */
+}
         #player {
             width: 100%; /* يأخذ المشغل عرض العمود بالكامل */
             height: auto; /* تلقائيًا بناءً على عرض المشغل */
