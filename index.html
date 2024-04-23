@@ -47,9 +47,14 @@
 
         /* Agregar estilos CSS para mejorar el diseño */
         #countries-list .column a:hover {
-            color: darkgray; /* Cambiar color del texto al pasar el mouse */
-            cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+            color: darkgray; /* Hover text color */
         }
+         #countries-list .column a {
+  color: black; /* Default text color */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+  text-decoration: none; /* Remove all text decoration */
+  text-decoration-underline: none; /* Specifically remove underline */
+}
     </style>
 </head>
 
