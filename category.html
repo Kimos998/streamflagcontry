@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Channels by Category</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="column" style="background-color: #ddd;">
+        <ul id="categories-list"></ul>
+    </div>
+    <div class="column" style="background-color: #f0f0f0;">
+        
+        <div id="channels-by-category"></div>
+    </div>
+</div>
+
+<script>
+    fetch('https://sheets.googleapis.com/v4/spreadsheets/1Nc1LNBUnUyJNV9dnJ10QFh8tMsjA_nQxRS9mKw4xFHI/values/Sheet1!A1:I100?key=AIzaSyB5WTjIR5OZt108xl9uQApzeoNRWuMyYRE')
+        .then(response => response.json())
+        .then(data => {
+            const categoriesList = document.getElementById('categories-list');
+            const channelsByCategory = document.getElementById('channels-by-category');
+
+            const categories = {}; // Object to store channels by category
+
+            // Extract categories and channels
+            data.values.forEach(channelData => {
+                const category = channelData[6]; // Assuming category is in column 7 (index 6)
+                const channelName = channelData[2];
+                const channelUrl = channelData[3];
+
+                // Populate categories object
+                if (!categories[category]) {
+                    categories[category] = [];
+                }
+                categories[category].push({ name: channelName, url: channelUrl });
+            });
+
+            // Populate categories list
+            Object.keys(categories).forEach(category => {
+                const categorySection = document.createElement('div');
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.textContent = category;
+                categorySection.appendChild(categoryTitle);
+
+                categories[category].forEach(channel => {
+                    const channelLink = document.createElement('a');
+                    channelLink.href = '#';
+                    channelLink.textContent = channel.name;
+                    channelLink.onclick = () => playChannel(channel.url); // Play channel when clicked
+                    categorySection.appendChild(channelLink);
+                    categorySection.appendChild(document.createElement('br'));
+                });
+
+                channelsByCategory.appendChild(categorySection);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    function playChannel(channelUrl) {
+        // Redirect to view4.html with the selected channel URL
+        window.location.href = `view4.html?channelUrl=${encodeURIComponent(channelUrl)}`;
+    }
+</script>
+</body>
+</html>
