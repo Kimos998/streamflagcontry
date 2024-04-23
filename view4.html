@@ -69,9 +69,18 @@ margin-left: 6%;
         }
 
 #channels-list li a {
-text-decoration: none; /* Remove all text decoration */
+  color: black; /* Default text color */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+
+  text-decoration: none; /* Remove all text decoration */
   text-decoration-underline: none; /* Specifically remove underline */
 }
+
+#channels-list li a:hover {
+    color: darkgray; /* Hover text color */
+        }
+
+
         #player {
             width: 100%; /* يأخذ المشغل عرض العمود بالكامل */
             height: auto; /* تلقائيًا بناءً على عرض المشغل */
